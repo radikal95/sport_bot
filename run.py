@@ -51,8 +51,8 @@ def update_exercise(message):
                 WHERE id={};"""
     query_result = db_query.execute_query(query.format(message.chat.id))
     exercise = int(query_result.value[0][1])
-    last_ex_date = datetime.datetime.strptime(query_result.value[0][0], '%Y-%m-%d')
-    if ((datetime.date.today()-last_ex_date)> datetime.timedelta(1)):
+    # last_ex_date = datetime.datetime.strptime(query_result.value[0][0], '%Y-%m-%d')
+    if ((datetime.date.today()-query_result.value[0][0])> datetime.timedelta(1)):
         query = """UPDATE public."user"
                         SET exercise={}
                         WHERE id={};"""
