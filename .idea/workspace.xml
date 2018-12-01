@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e175f807-8036-46c0-acdd-dd9dd0c0bb44" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run.py" afterPath="$PROJECT_DIR$/run.py" />
     </list>
     <ignored path="sport_bot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,6 +47,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="a" />
         <option value="Arseny Radushin &lt;radushin.arseny@yandex.ru&gt;" />
       </list>
     </option>
@@ -328,7 +328,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543700539322</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fixing insert in /start">
+      <created>1543700682389</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1543700682389</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
