@@ -70,8 +70,8 @@ def insert_into_a_db(message):
     query_result=db_query.execute_query(query.format(message.chat.id))
     if len(query_result.value)<1:
         query ="""INSERT INTO public."user"
-        (id, full_name_telegram,stage,auth, exercise, )
-        VALUES ({},'{}',{}, False, 0);"""
+        (id, full_name_telegram,stage,auth, exercise, last_ex_date)
+        VALUES ({},'{}',{}, False, 0,'2000-01-01');"""
         name = 'Unknown user'
         if message.chat.first_name:
             name = str(message.chat.first_name)
