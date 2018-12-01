@@ -9,7 +9,7 @@ db_query = DbQuery()
 bot = telebot.TeleBot(config.token)
 logging.basicConfig(filename="sample.log", level=logging.INFO)
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(regexp="/start")
 def insert_into_a_db(message):
     query = """SELECT auth
 	        FROM public."user"
