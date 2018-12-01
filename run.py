@@ -52,14 +52,15 @@ def update_exercise(message):
     query_result = db_query.execute_query(query.format(message.chat.id))
     exercise = int(query_result.value[0][1])
     # last_ex_date = datetime.datetime.strptime(query_result.value[0][0], '%Y-%m-%d')
-    if ((datetime.date.today()-query_result.value[0][0])> datetime.timedelta(1)):
-        query = """UPDATE public."user"
-                        SET exercise={}
-                        WHERE id={};"""
-        query_result = db_query.execute_query(query.format(exercise+1, message.chat.id), is_dml=True)
-        bot.send_message(message.chat.id, "Bravo! We assigned 1 point to you!")
-    else:
+    if (datetime.date.today().day==query_result.value[0][0].day) and (datetime.date.today().month==query_result.value[0][0].month) and (datetime.date.today().year==query_result.value[0][0].year):
         bot.send_message(message.chat.id, "Sorry, you have already submitted your training today")
+    else:
+        query = """UPDATE public."user"
+                                SET exercise={}
+                                WHERE id={};"""
+        query_result = db_query.execute_query(query.format(exercise + 1, message.chat.id), is_dml=True)
+        bot.send_message(message.chat.id, "Bravo! We assigned 1 point to you!")
+
 
 @bot.message_handler(regexp='/start')
 def insert_into_a_db(message):
