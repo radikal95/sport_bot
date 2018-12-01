@@ -56,9 +56,9 @@ def update_exercise(message):
         bot.send_message(message.chat.id, "Sorry, you have already submitted your training today")
     else:
         query = """UPDATE public."user"
-                                SET exercise={}
+                                SET exercise={},last_ex_date='{}'
                                 WHERE id={};"""
-        query_result = db_query.execute_query(query.format(exercise + 1, message.chat.id), is_dml=True)
+        query_result = db_query.execute_query(query.format(exercise + 1,datetime.datetime.now(), message.chat.id), is_dml=True)
         bot.send_message(message.chat.id, "Bravo! We assigned 1 point to you!")
 
 
