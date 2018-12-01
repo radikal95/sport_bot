@@ -61,7 +61,7 @@ def update_exercise(message):
     else:
         bot.send_message(message.chat.id, "Sorry, you have already submitted your training today")
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(regexp='/start')
 def insert_into_a_db(message):
     # print('a')
     query = """SELECT auth
