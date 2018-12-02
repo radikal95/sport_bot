@@ -4,6 +4,9 @@ import time
 import datetime
 import logging
 import json
+import zipfile
+import os
+from openpyxl import Workbook
 from db_tool import DbQuery
 
 db_query = DbQuery()
@@ -61,7 +64,6 @@ def update_exercise(message):
         query_result = db_query.execute_query(query.format(exercise + 1,datetime.datetime.now(), message.chat.id), is_dml=True)
         bot.send_message(message.chat.id, "Bravo! We assigned 1 point to you!")
 
-
 @bot.message_handler(regexp='/start')
 def insert_into_a_db(message):
     # print('a')
@@ -88,6 +90,32 @@ def insert_into_a_db(message):
             bot.send_message(message.chat.id, "You are already logged in")
     pass
 
+@bot.message_handler(regexp='/stats')
+def stats(message):
+    working_directory = os.path.dirname(os.path.abspath(__file__))
+    workbook = Workbook()
+    query = """SELECT full_name_telegram, full_name_provided, exercise
+            	        FROM public."user"
+            	        ORDER by exercise DESC;"""
+    query_result = db_query.execute_query(query)
+    work_sheet = workbook.create_sheet('Stats')
+    work_sheet['A1'] = 'full_name_telegram'
+    work_sheet['B1'] = 'full_name_provided'
+    work_sheet['C1'] = 'exercise'
+    row=2
+    for data in query_result.value:
+        work_sheet['A'+str(row)]=str(data[1])
+        work_sheet['B' + str(row)] = str(data[2])
+        work_sheet['C' + str(row)] = str(data[3])
+        row=row+1
+    workbook.save('stats.xlsx')
+    z = zipfile.ZipFile('stats.zip', 'w')
+    z.write('stats.xlsx')
+    z.close()
+    bot.send_document(message.chat.id, open(working_directory + '/stats.zip', 'rb'))
+    pass
+
+
 @bot.message_handler(regexp=config.secret_key)
 def login(message):
     query = """SELECT auth
@@ -107,28 +135,6 @@ def login(message):
                 bot.send_message(message.chat.id, "<b>The password is correct!</b> \n"
                 "Please, answer one simple question. \nWhat is your full name?""", parse_mode='HTML')
     pass
-
-
-# @bot.callback_query_handler(func=lambda call: True)
-# def callback_inline(call):
-#     if call.message:
-#         if call.data:
-#             query = """SELECT full_name_provided
-#                           	        FROM public."user"
-#                                       WHERE id={};"""
-#             query_result = db_query.execute_query(query.format(call.message.chat.id))
-#             if call.message.chat.username:
-#                 bot.send_message(call.data, query_result.value[0][0]+' (@'+call.message.chat.username+') will come with you!')
-#             else:
-#                 bot.send_message(call.data, query_result.value[0][0] + ' will come with you!')
-#             query = """SELECT full_name_provided
-#                                       	        FROM public."user"
-#                                                   WHERE id={};"""
-#             query_result = db_query.execute_query(query.format(call.data))
-#             bot.answer_callback_query(call.id, text="Done!")
-#             bot.send_message(call.message.chat.id, 'Invitation from ' + query_result.value[0][0] + ' accepted.')
-#     pass
-
 
 @bot.message_handler(func=lambda message: login_check(message))
 def dialog(message):
