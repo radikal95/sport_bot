@@ -104,9 +104,9 @@ def stats(message):
     work_sheet['C1'] = 'exercise'
     row=2
     for data in query_result.value:
-        work_sheet['A'+str(row)]=str(data[1])
-        work_sheet['B' + str(row)] = str(data[2])
-        work_sheet['C' + str(row)] = str(data[3])
+        work_sheet['A'+str(row)]=str(data[0])
+        work_sheet['B' + str(row)] = str(data[1])
+        work_sheet['C' + str(row)] = str(data[2])
         row=row+1
     workbook.save('stats.xlsx')
     z = zipfile.ZipFile('stats.zip', 'w')
