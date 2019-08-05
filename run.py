@@ -53,6 +53,7 @@ def update_exercise(message):
     	        FROM public."user"
                 WHERE id={};"""
     query_result = db_query.execute_query(query.format(message.chat.id))
+    print(query_result)
     exercise = int(query_result.value[0][1])
     # last_ex_date = datetime.datetime.strptime(query_result.value[0][0], '%Y-%m-%d')
     if (datetime.date.today().day==query_result.value[0][0].day) and (datetime.date.today().month==query_result.value[0][0].month) and (datetime.date.today().year==query_result.value[0][0].year):
