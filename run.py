@@ -59,13 +59,21 @@ def update_exercise(message):
     except:
         exercise = 0
     # last_ex_date = datetime.datetime.strptime(query_result.value[0][0], '%Y-%m-%d')
-    if (datetime.date.today().day==query_result.value[0][0].day) and (datetime.date.today().month==query_result.value[0][0].month) and (datetime.date.today().year==query_result.value[0][0].year):
-        bot.send_message(message.chat.id, "Sorry, you have already submitted your training today")
-    else:
-        query = """UPDATE public."user"
+    try:
+        if (datetime.date.today().day==query_result.value[0][0].day) and (datetime.date.today().month==query_result.value[0][0].month) and (datetime.date.today().year==query_result.value[0][0].year):
+            bot.send_message(message.chat.id, "Sorry, you have already submitted your training today")
+        else:
+            query = """UPDATE public."user"
                                 SET exercise={},last_ex_date='{}'
                                 WHERE id={};"""
-        query_result = db_query.execute_query(query.format(exercise + 1,datetime.datetime.now(), message.chat.id), is_dml=True)
+            query_result = db_query.execute_query(query.format(exercise + 1,datetime.datetime.now(), message.chat.id), is_dml=True)
+            bot.send_message(message.chat.id, "Bravo! We assigned 1 point to you!")
+    except:
+        query = """UPDATE public."user"
+                                        SET exercise={},last_ex_date='{}'
+                                        WHERE id={};"""
+        query_result = db_query.execute_query(query.format(exercise + 1, datetime.datetime.now(), message.chat.id),
+                                              is_dml=True)
         bot.send_message(message.chat.id, "Bravo! We assigned 1 point to you!")
 
 @bot.message_handler(regexp='/start')
