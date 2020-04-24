@@ -1,5 +1,4 @@
-# token='614300173:AAHtQAZwXEe0EDUGrCXAGB2zrGlz7_jz8Ws'
-token = '622726947:AAHOVDDfxJDbxyMNFBYx72OZfHPPG8AvnUY'
+token = '622726947:AAFfLDvnspZVTfohxH6w2vafu7Ca6JlOgoo'
 HOST = 'localhost'
 # DATABASE_URL = 'russia_help'
 DATABASE_URL = 'root'
