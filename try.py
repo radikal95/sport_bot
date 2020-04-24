@@ -1,24 +1,28 @@
+#!/usr/bin/python
+
+# This is a simple echo bot using the decorator mechanism.
+# It echoes any incoming text messages.
+
 import telebot
-import config
-import time
-import datetime
-import logging
-import json
-import zipfile
-import os
-from openpyxl import Workbook
-bot = telebot.TeleBot(config.token)
-logging.basicConfig(filename="sample.log", level=logging.INFO)
 
-@bot.message_handler(content_types='text')
-def default_answer(message):
-    bot.send_message(message.chat.id, message.text)
-    pass
+API_TOKEN = '622726947:AAHOVDDfxJDbxyMNFBYx72OZfHPPG8AvnUY'
 
-while True:
-    # bot.polling(none_stop=True)
-    try:
-        bot.polling(none_stop=True)
-    except Exception as e:
-        logging.error(e)
-        time.sleep(15)
+bot = telebot.TeleBot(API_TOKEN)
+
+
+# Handle '/start' and '/help'
+@bot.message_handler(commands=['help', 'start'])
+def send_welcome(message):
+    bot.reply_to(message, """\
+Hi there, I am EchoBot.
+I am here to echo your kind words back to you. Just say anything nice and I'll say the exact same thing to you!\
+""")
+
+
+# Handle all other messages with content_type 'text' (content_types defaults to ['text'])
+@bot.message_handler(func=lambda message: True)
+def echo_message(message):
+    bot.reply_to(message, message.text)
+
+
+bot.polling()
