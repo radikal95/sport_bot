@@ -12,7 +12,7 @@ logging.basicConfig(filename="sample.log", level=logging.INFO)
 
 @bot.message_handler(content_types='text')
 def default_answer(message):
-    bot.send_message(message.chat.id, message.chat.text)
+    bot.send_message(message.chat.id, message.text)
     pass
 
 while True:
