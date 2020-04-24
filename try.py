@@ -7,7 +7,7 @@ import time
 import logging
 import telebot
 
-API_TOKEN = '622726947:AAHOVDDfxJDbxyMNFBYx72OZfHPPG8AvnUY'
+API_TOKEN = '622726947:AAFfLDvnspZVTfohxH6w2vafu7Ca6JlOgoo'
 
 bot = telebot.TeleBot(API_TOKEN)
 
